@@ -6,7 +6,6 @@ import { TldrawApp, TDCallbacks } from '~state'
 import { TldrawContext, useStylesheet, useKeyboardShortcuts, useTldrawApp } from '~hooks'
 import { shapeUtils } from '~state/shapes'
 import { ToolsPanel } from '~components/ToolsPanel'
-import { TopPanel } from '~components/TopPanel'
 import { ContextMenu } from '~components/ContextMenu'
 import { FocusButton } from '~components/FocusButton'
 import { TLDR } from '~state/TLDR'
@@ -421,7 +420,6 @@ const InnerTldraw = React.memo(function InnerTldraw({
     <StyledLayout ref={rWrapper} tabIndex={-0} className={settings.isDarkMode ? dark : ''}>
       <Loading />
       <OneOff focusableRef={rWrapper} autofocus={autofocus} />
-      <ContextMenu>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Renderer
             id={id}
@@ -447,11 +445,11 @@ const InnerTldraw = React.memo(function InnerTldraw({
             hideGrid={!settings.showGrid}
             showDashedBrush={showDashedBrush}
             performanceMode={app.session?.performanceMode}
-            onPinchStart={app.onPinchStart}
-            onPinchEnd={app.onPinchEnd}
-            onPinch={app.onPinch}
-            onPan={app.onPan}
-            onZoom={app.onZoom}
+            // onPinchStart={app.onPinchStart}
+            // onPinchEnd={app.onPinchEnd}
+            // onPinch={app.onPinch}
+            // onPan={app.onPan}
+            // onZoom={app.onZoom}
             onPointerDown={app.onPointerDown}
             onPointerMove={app.onPointerMove}
             onPointerUp={app.onPointerUp}
@@ -500,23 +498,12 @@ const InnerTldraw = React.memo(function InnerTldraw({
             onDrop={app.onDrop}
           />
         </ErrorBoundary>
-      </ContextMenu>
       {showUI && (
         <StyledUI>
           {settings.isFocusMode ? (
             <FocusButton onSelect={app.toggleFocusMode} />
           ) : (
             <>
-              <TopPanel
-                readOnly={readOnly}
-                showPages={showPages}
-                showMenu={showMenu}
-                showMultiplayerMenu={showMultiplayerMenu}
-                showStyles={showStyles}
-                showZoom={showZoom}
-                sponsor={showSponsorLink}
-              />
-              <StyledSpacer />
               {showTools && !readOnly && <ToolsPanel />}
             </>
           )}

@@ -23,9 +23,7 @@ export const ToolsPanel = React.memo(function ToolsPanel({ onBlur }: ToolsPanelP
       <StyledCenterWrap id="TD-Tools">
         <BackToContent />
         <StyledPrimaryTools>
-          <ActionButton />
           <PrimaryTools />
-          <DeleteButton />
         </StyledPrimaryTools>
       </StyledCenterWrap>
       {isDebugMode && (
@@ -39,7 +37,7 @@ export const ToolsPanel = React.memo(function ToolsPanel({ onBlur }: ToolsPanelP
 
 const StyledToolsPanelContainer = styled('div', {
   position: 'absolute',
-  bottom: 0,
+  top: '$4',
   left: 0,
   right: 0,
   width: '100%',

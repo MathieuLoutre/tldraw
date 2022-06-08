@@ -68,16 +68,6 @@ export const PrimaryTools = React.memo(function PrimaryTools() {
         <Pencil1Icon />
       </ToolButtonWithTooltip>
       <ToolButtonWithTooltip
-        kbd={'3'}
-        label={'eraser'}
-        onClick={selectEraseTool}
-        isActive={activeTool === 'erase'}
-        id="TD-PrimaryTools-Eraser"
-      >
-        <EraserIcon />
-      </ToolButtonWithTooltip>
-      <ShapesMenu activeTool={activeTool} isToolLocked={isToolLocked} />
-      <ToolButtonWithTooltip
         kbd={'8'}
         label={TDShapeType.Arrow}
         onClick={selectArrowTool}

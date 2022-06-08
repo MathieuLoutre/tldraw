@@ -1,10 +1,7 @@
 import { createClient } from '@liveblocks/client'
 import { LiveblocksProvider, RoomProvider } from '@liveblocks/react'
 import { Tldraw, TldrawApp, useFileSystem } from '@tldraw/tldraw'
-import { useAccountHandlers } from 'hooks/useAccountHandlers'
-import { useMultiplayerAssets } from 'hooks/useMultiplayerAssets'
 import { useMultiplayerState } from 'hooks/useMultiplayerState'
-import { useUploadAssets } from 'hooks/useUploadAssets'
 import React, { FC } from 'react'
 import { styled } from 'styles'
 
@@ -15,23 +12,17 @@ const client = createClient({
 
 interface Props {
   roomId: string
-  isUser: boolean
-  isSponsor: boolean
 }
 
 const MultiplayerEditor: FC<Props> = ({
   roomId,
-  isUser = false,
-  isSponsor = false,
 }: {
   roomId: string
-  isUser: boolean
-  isSponsor: boolean
 }) => {
   return (
     <LiveblocksProvider client={client}>
       <RoomProvider id={roomId}>
-        <Editor roomId={roomId} isSponsor={isSponsor} isUser={isUser} />
+        <Editor roomId={roomId} />
       </RoomProvider>
     </LiveblocksProvider>
   )
@@ -39,12 +30,9 @@ const MultiplayerEditor: FC<Props> = ({
 
 // Inner Editor
 
-function Editor({ roomId, isUser, isSponsor }: Props) {
+function Editor({ roomId }: Props) {
   const fileSystemEvents = useFileSystem()
-  const { onSignIn, onSignOut } = useAccountHandlers()
   const { error, ...events } = useMultiplayerState(roomId)
-  const { onAssetCreate, onAssetDelete } = useMultiplayerAssets()
-  const { onAssetUpload } = useUploadAssets()
 
   if (error) return <LoadingScreen>Error: {error.message}</LoadingScreen>
 
@@ -52,14 +40,8 @@ function Editor({ roomId, isUser, isSponsor }: Props) {
     <div className="tldraw">
       <Tldraw
         autofocus
-        disableAssets={false}
+        disableAssets
         showPages={false}
-        showSponsorLink={!isSponsor}
-        onSignIn={isSponsor ? undefined : onSignIn}
-        onSignOut={isUser ? onSignOut : undefined}
-        onAssetCreate={onAssetCreate}
-        onAssetDelete={onAssetDelete}
-        onAssetUpload={onAssetUpload}
         {...fileSystemEvents}
         {...events}
       />
